@@ -17,16 +17,21 @@ function setup() {
   noStroke();
 
   // Create Layout GUI
-  const gui = createGui('Layout');
-  sliderRange(0, 4, 1);
-  gui.addGlobals('shape', 'numChains', 'strokeColor', 'backgroundColor');
+  const gui = createGui('Style');
+  gui.addGlobals('strokeColor', 'backgroundColor');
 
   // Create Shape GUI
-  const gui2 = createGui('Style').setPosition(width - 220, 20);
-  sliderRange(0, 50, 1);
-  gui2.addGlobals('numTurns', 'dnaWidth');
-  sliderRange(0, 400, 0.1);
-  gui2.addGlobals('dnaLength', 'drawAngle');
+  const gui2 = createGui('DNA Property').setPosition(width - 220, 20);
+  sliderRange(0, 7, 1);
+  gui2.addGlobals('shape', 'numChains');
+  sliderRange(0, 100, 1);
+  gui2.addGlobals('numTurns');
+  sliderRange(0, 100, 1);
+  gui2.addGlobals('dnaWidth');
+  sliderRange(0, 500, 1);
+  gui2.addGlobals('dnaLength');
+  sliderRange(0, 360, 1);
+  gui2.addGlobals('drawAngle');
   sliderRange(0, 0.5, 0.01);
   gui2.addGlobals('gap');
   sliderRange(0, 10, 0.1);

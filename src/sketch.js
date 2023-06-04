@@ -5,6 +5,7 @@ var dnaLength = 200;
 var dnaWidth = 25;
 var drawAngle = 360;
 var dnaWeight = 2;
+var gap = 0.25;
 var backgroundColor = '#000000';
 var strokeColor = '#00ddff';
 var shape = ['circle', 'linear'];
@@ -26,6 +27,8 @@ function setup() {
   gui2.addGlobals('numTurns', 'dnaWidth');
   sliderRange(0, 400, 0.1);
   gui2.addGlobals('dnaLength', 'dnaAngle');
+  sliderRange(0, 0.5, 0.01);
+  gui2.addGlobals('gap');
   sliderRange(0, 10, 0.1);
   gui2.addGlobals('dnaWeight');
 
@@ -44,19 +47,23 @@ const circularDNA = () => {
   noFill();
   smooth();
 
-  const dna = new Dna();
-  dna.calcCoordinates();
-  dna.drawDNA();
+  const pitch = drawAngle / numTurns; //a degree for one numTurns
+  for (let i = 0; i < numChains; i++){ 
+    angleGap = i * gap * pitch
+    const dna = new Dna(pitch, angleGap);
+    dna.calcCoordinates();
+    dna.drawDNA();
+  }
 }
 
 
 class Dna {
 
-  constructor() {
-    this.gap = 0;
+  constructor(pitch, angleGap) {
+    this.pitch = pitch
+    this.angleGap = angleGap;
     this.innerRadius = dnaLength;
     this.outerRadius = this.innerRadius + dnaWidth;
-    this.pitch = drawAngle / numTurns;//a degree for one numTurns
 
     this.innerAnchor = Array.from({length: numTurns + 1}, () => Array(numChains).fill(0));
     this.outerAnchor = Array.from({length: numTurns + 1}, () => Array(numChains).fill(0));
@@ -70,15 +77,15 @@ class Dna {
     for(let i = 0; i < numTurns + 1; i++){
       const axis = 0;
         //initiation point (inner circle)
-        this.innerAnchor[i][axis] = this.innerRadius * cos((i * this.pitch + this.gap) * PI / 180);
+        this.innerAnchor[i][axis] = this.innerRadius * cos((i * this.pitch + this.angleGap) * PI / 180);
         //end point (outer circle)
-        this.outerAnchor[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 2 + this.gap) * PI / 180);
+        this.outerAnchor[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 2 + this.angleGap) * PI / 180);
         //control point 1 (inner)
-        this.innerControlLeft[i][axis] = this.innerRadius * cos((i * this.pitch + this.pitch / 4 + this.gap) * PI / 180);
+        this.innerControlLeft[i][axis] = this.innerRadius * cos((i * this.pitch + this.pitch / 4 + this.angleGap) * PI / 180);
         //control point 2 (outer)
-        this.outerControlLeft[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 4 + this.gap) * PI / 180);
-        this.innerControlRight[i][axis] = this.innerRadius * cos((i * this.pitch - this.pitch / 4 + this.gap) * PI / 180);
-        this.outerControlRight[i][axis] = this.outerRadius * cos((i * this.pitch - this.pitch / 4 + this.gap) * PI / 180);     
+        this.outerControlLeft[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 4 + this.angleGap) * PI / 180);
+        this.innerControlRight[i][axis] = this.innerRadius * cos((i * this.pitch - this.pitch / 4 + this.angleGap) * PI / 180);
+        this.outerControlRight[i][axis] = this.outerRadius * cos((i * this.pitch - this.pitch / 4 + this.angleGap) * PI / 180);     
         //console.log(innerAnchor[i][0],innerAnchor[i][1],outerAnchor[i][0],outerAnchor[i][1]);  
     }
     //console.log("max_pitch", numTurns*pitch);
@@ -87,21 +94,21 @@ class Dna {
     let sign = 1;
     for(let i = 0; i < numTurns + 1; i++){
       const axis = 1;
-      if(i * this.pitch + this.gap > 180 && i * this.pitch + this.gap < 360 ) sign = -1;
+      if(i * this.pitch + this.angleGap > 180 && i * this.pitch + this.angleGap < 360 ) sign = -1;
       else sign = 1;
         this.innerAnchor[i][axis] = sign * circle(this.innerRadius, this.innerAnchor[i][0]);
-      if(i * this.pitch + this.pitch / 2 + this.gap > 180 && i * this.pitch + this.pitch / 2 + this.gap < 360 ) sign = -1;
+      if(i * this.pitch + this.pitch / 2 + this.angleGap > 180 && i * this.pitch + this.pitch / 2 + this.angleGap < 360 ) sign = -1;
       else sign = 1;
         this.outerAnchor[i][axis] = sign * circle(this.outerRadius, this.outerAnchor[i][0]);
-      if(i * this.pitch + this.pitch / 4 + this.gap > 180 && i * this.pitch + this.pitch / 4 + this.gap < 360 ) sign = -1;   
+      if(i * this.pitch + this.pitch / 4 + this.angleGap > 180 && i * this.pitch + this.pitch / 4 + this.angleGap < 360 ) sign = -1;   
       else sign = 1;
         this.innerControlLeft[i][axis] = sign * circle(this.innerRadius, this.innerControlLeft[i][0]);
         this.outerControlLeft[i][axis] = sign * circle(this.outerRadius, this.outerControlLeft[i][0]);
-      if(i * this.pitch - this.pitch / 4 + this.gap > 180 && i * this.pitch - this.pitch / 4 + this.gap < 360 ) sign = -1;
+      if(i * this.pitch - this.pitch / 4 + this.angleGap > 180 && i * this.pitch - this.pitch / 4 + this.angleGap < 360 ) sign = -1;
       else sign = 1;
         this.innerControlRight[i][axis] = sign * circle(this.innerRadius, this.innerControlRight[i][0]);
         this.outerControlRight[i][axis] = sign * circle(this.outerRadius, this.outerControlRight[i][0]);
-        console.log(i, i * this.pitch + this.gap, i * this.pitch + this.gap + this.pitch / 4, i * this.pitch + this.gap - this.pitch / 4); 
+        console.log(i, i * this.pitch + this.angleGap, i * this.pitch + this.angleGap + this.pitch / 4, i * this.pitch + this.angleGap - this.pitch / 4); 
     }
     console.log(this.innerControlRight[0][0], this.innerControlRight[0][1], this.outerControlRight[0][0], this.outerControlRight[0][1]);
   }

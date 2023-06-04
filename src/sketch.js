@@ -26,7 +26,7 @@ function setup() {
   sliderRange(0, 50, 1);
   gui2.addGlobals('numTurns', 'dnaWidth');
   sliderRange(0, 400, 0.1);
-  gui2.addGlobals('dnaLength', 'dnaAngle');
+  gui2.addGlobals('dnaLength', 'drawAngle');
   sliderRange(0, 0.5, 0.01);
   gui2.addGlobals('gap');
   sliderRange(0, 10, 0.1);

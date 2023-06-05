@@ -12,9 +12,9 @@ const styles = {
 const props = {
   shape: ['circle', 'linear'],
 
-  length: 200,
+  length: 600,
   lengthMin: 0,
-  lengthMax: 500,
+  lengthMax: 1500,
   lengthStep: 1,
 
   width: 25,
@@ -99,7 +99,7 @@ class Dna {
     this.pitch = pitch
     this.angleGap = angleGap;
     this.numTurns = props.turns;
-    this.innerRadius = props.length;
+    this.innerRadius = Math.trunc(props.length / PI);
     this.outerRadius = this.innerRadius + props.width;
     console.log(Dna.NUM_AXES);
 

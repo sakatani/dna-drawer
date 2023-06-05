@@ -72,7 +72,7 @@ const circularDNA = () => {
 
   const pitch = props.angle / props.turns; //a degree for one this.numTurns
   for (let i = 0; i < props.chains; i++){ 
-    angleGap = i * props.gap * pitch
+    const angleGap = i * props.gap * pitch
     const dna = new Dna(pitch, angleGap);
     dna.calcCoordinates();
     dna.drawDNA();

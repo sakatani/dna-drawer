@@ -61,10 +61,8 @@ function setup() {
 
 function draw() {
   background(styles.backgroundColor)
-
-  circular = 1
   
-  if (circular == 1) circularDNA();
+  if (props.shape == "circle") circularDNA();
   else linearDNA();
 }
 

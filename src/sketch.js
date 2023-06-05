@@ -79,6 +79,18 @@ const circularDNA = () => {
   }
 }
 
+const linearDNA = () => {
+  noFill();
+  smooth();
+
+  const pitch = 2 * props.length / props.turns; //a degree for one this.numTurns
+  for (let i = 0; i < props.chains; i++){ 
+    const positionGap = - i * props.gap * pitch
+    const dna = new LinearDna(pitch, positionGap);
+    dna.calcCoordinates();
+    dna.drawDNA();
+  }
+}
 
 class Dna {
   static NUM_AXES = 2;
@@ -162,6 +174,69 @@ class Dna {
 
 }
 
+class LinearDna {
+  static NUM_AXES = 2;
+
+  constructor(pitch, positionGap) {
+    this.pitch = pitch
+    this.positionGap = positionGap;
+    this.numTurns = props.turns;
+    this.width = props.width;
+
+    this.innerAnchor = Array.from({length: this.numTurns + 1}, () => new Float32Array(LinearDna.NUM_AXES));
+    this.outerAnchor = Array.from({length: this.numTurns + 1}, () => new Float32Array(LinearDna.NUM_AXES));
+    this.innerControlLeft = Array.from({length: this.numTurns + 1}, () => new Float32Array(LinearDna.NUM_AXES));
+    this.outerControlLeft = Array.from({length: this.numTurns + 1}, () => new Float32Array(LinearDna.NUM_AXES));
+    this.innerControlRight = Array.from({length: this.numTurns + 1}, () => new Float32Array(LinearDna.NUM_AXES));
+    this.outerControlRight = Array.from({length: this.numTurns + 1}, () => new Float32Array(LinearDna.NUM_AXES));
+  }
+
+  calcCoordinates() {
+    for(let i = 0; i < this.numTurns + 1; i++){
+      const axis = 0;
+      //initiation point
+      this.innerAnchor[i][axis] = i * this.pitch + this.positionGap;
+      //end point
+      this.outerAnchor[i][axis] = (i + 1/2) * this.pitch + this.positionGap;
+      //control point
+      this.innerControlLeft[i][axis] = (i + 1/4) * this.pitch + this.positionGap;
+      this.outerControlLeft[i][axis] = (i + 1/4) * this.pitch + this.positionGap;
+      this.innerControlRight[i][axis] = (i - 1/4) * this.pitch + this.positionGap;
+      this.outerControlRight[i][axis] = (i - 1/4) * this.pitch + this.positionGap;
+    }
+
+    for(let i = 0; i < this.numTurns + 1; i++){
+      const axis = 1;
+      this.innerAnchor[i][axis] = 0;
+      this.outerAnchor[i][axis] = this.width;
+      this.innerControlLeft[i][axis] = 0;
+      this.outerControlLeft[i][axis] = this.width;
+      this.innerControlRight[i][axis] = 0;
+      this.outerControlRight[i][axis] = this.width;
+    }
+    console.log(this.innerControlRight[0][0], this.innerControlRight[0][1], this.outerControlRight[0][0], this.outerControlRight[0][1]);
+  }
+
+  drawDNA() {
+    push();
+    translate(100, height / 2);
+    strokeWeight(styles.weight); 
+    stroke(styles.strokeColor);
+    beginShape();
+    const a = 1;
+    const b = 1;
+      for(let i = 0; i < this.numTurns + 1; i++){
+        bezier(a * this.innerAnchor[i][0], b * this.innerAnchor[i][1], a * this.innerControlLeft[i][0], b * this.innerControlLeft[i][1], a * this.outerControlLeft[i][0], b * this.outerControlLeft[i][1], a * this.outerAnchor[i][0], b * this.outerAnchor[i][1]);
+        if(i != this.numTurns){
+          //console.log(outerAnchor[i][0],outerAnchor[i][1],innerAnchor[i+1][0],innerAnchor[i+1][1]);
+          bezier(a * this.outerAnchor[i][0], b * this.outerAnchor[i][1], a * this.outerControlRight[i+1][0], b * this.outerControlRight[i+1][1], a * this.innerControlRight[i+1][0], b * this.innerControlRight[i+1][1], a * this.innerAnchor[i+1][0], b * this.innerAnchor[i+1][1]);         
+        }
+      }
+    endShape();
+    pop();  
+  }
+
+}
 
 const circle = (x, y) => {
   return sqrt(sq(x) - sq(y));

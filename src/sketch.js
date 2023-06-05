@@ -50,12 +50,12 @@ function setup() {
   noStroke();
 
   // Create Layout GUI
-  const gui = createGui('Style');
-  gui.addObject(styles);
+  const gui = createGui('DNA Properties');
+  gui.addObject(props);
 
   // Create Shape GUI
-  const gui2 = createGui('DNA Property').setPosition(width - 220, 20);
-  gui2.addObject(props);
+  const gui2 = createGui('Styles').setPosition(width - 220, 20);
+  gui2.addObject(styles);
 
 }
 

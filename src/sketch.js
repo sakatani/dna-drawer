@@ -61,16 +61,15 @@ function setup() {
 
 function draw() {
   background(styles.backgroundColor)
-  
+  noFill();
+  smooth();
+
   if (props.shape == "circle") circularDNA();
   else linearDNA();
 }
 
 const circularDNA = () => {
-  noFill();
-  smooth();
-
-  const pitch = props.angle / props.turns; //a degree for one this.numTurns
+  const pitch = props.angle / props.turns;
   for (let i = 0; i < props.chains; i++){ 
     const gap = i * props.gap * pitch
     const dna = new CircularDna(pitch, gap);
@@ -80,10 +79,7 @@ const circularDNA = () => {
 }
 
 const linearDNA = () => {
-  noFill();
-  smooth();
-
-  const pitch = 2 * props.length / props.turns; //a degree for one this.numTurns
+  const pitch = 2 * props.length / props.turns;
   for (let i = 0; i < props.chains; i++){ 
     const gap = - i * props.gap * pitch
     const dna = new LinearDna(pitch, gap);

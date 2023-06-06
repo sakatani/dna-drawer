@@ -102,12 +102,12 @@ class Dna {
     this.length = props.length;
     this.width = props.width;
 
-    this.innerAnchor = Array.from({length: this.numTurns + 1}, () => new Float32Array(Dna.NUM_AXES));
-    this.outerAnchor = Array.from({length: this.numTurns + 1}, () => new Float32Array(Dna.NUM_AXES));
-    this.innerControlLeft = Array.from({length: this.numTurns + 1}, () => new Float32Array(Dna.NUM_AXES));
-    this.outerControlLeft = Array.from({length: this.numTurns + 1}, () => new Float32Array(Dna.NUM_AXES));
-    this.innerControlRight = Array.from({length: this.numTurns + 1}, () => new Float32Array(Dna.NUM_AXES));
-    this.outerControlRight = Array.from({length: this.numTurns + 1}, () => new Float32Array(Dna.NUM_AXES));
+    this.innerAnchor = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
+    this.outerAnchor = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
+    this.innerControlLeft = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
+    this.outerControlLeft = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
+    this.innerControlRight = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
+    this.outerControlRight = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
   }
 
   calcCoordinates() {}

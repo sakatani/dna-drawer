@@ -1,3 +1,5 @@
+const RAD = PI / 180;
+
 // gui props
 const styles = {
   backgroundColor: '#000000',
@@ -138,15 +140,15 @@ class CircularDna extends Dna {
     for(let i = 0; i < this.numTurns + 1; i++){
       let axis = 0;
       //initiation point (inner circle)
-      this.innerAnchor[i][axis] = this.innerRadius * cos((i * this.pitch + this.gap) * PI / 180);
+      this.innerAnchor[i][axis] = this.innerRadius * cos((i * this.pitch + this.gap) * RAD);
       //end point (outer circle)
-      this.outerAnchor[i][axis] = this.outerRadius * cos(((i + 1 / 2) * this.pitch + this.gap) * PI / 180);
+      this.outerAnchor[i][axis] = this.outerRadius * cos(((i + 1 / 2) * this.pitch + this.gap) * RAD);
       //control point 1 (inner)
-      this.innerControlLeft[i][axis] = this.innerRadius * cos(((i + 1 / 4) * this.pitch + this.gap) * PI / 180);
-      this.innerControlRight[i][axis] = this.innerRadius * cos(((i - 1 / 4) * this.pitch + this.gap) * PI / 180);
+      this.innerControlLeft[i][axis] = this.innerRadius * cos(((i + 1 / 4) * this.pitch + this.gap) * RAD);
+      this.innerControlRight[i][axis] = this.innerRadius * cos(((i - 1 / 4) * this.pitch + this.gap) * RAD);
       //control point 2 (outer)
-      this.outerControlLeft[i][axis] = this.outerRadius * cos(((i + 1 / 4) * this.pitch + this.gap) * PI / 180);
-      this.outerControlRight[i][axis] = this.outerRadius * cos(((i - 1 / 4) * this.pitch + this.gap) * PI / 180);     
+      this.outerControlLeft[i][axis] = this.outerRadius * cos(((i + 1 / 4) * this.pitch + this.gap) * RAD);
+      this.outerControlRight[i][axis] = this.outerRadius * cos(((i - 1 / 4) * this.pitch + this.gap) * RAD);     
 
       //y^2 = r^2 - x^2
       axis = 1;

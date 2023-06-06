@@ -140,27 +140,27 @@ class CircularDna extends Dna {
       //initiation point (inner circle)
       this.innerAnchor[i][axis] = this.innerRadius * cos((i * this.pitch + this.gap) * PI / 180);
       //end point (outer circle)
-      this.outerAnchor[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 2 + this.gap) * PI / 180);
+      this.outerAnchor[i][axis] = this.outerRadius * cos(((i + 1 / 2) * this.pitch + this.gap) * PI / 180);
       //control point 1 (inner)
-      this.innerControlLeft[i][axis] = this.innerRadius * cos((i * this.pitch + this.pitch / 4 + this.gap) * PI / 180);
-      this.innerControlRight[i][axis] = this.innerRadius * cos((i * this.pitch - this.pitch / 4 + this.gap) * PI / 180);
+      this.innerControlLeft[i][axis] = this.innerRadius * cos(((i + 1 / 4) * this.pitch + this.gap) * PI / 180);
+      this.innerControlRight[i][axis] = this.innerRadius * cos(((i - 1 / 4) * this.pitch + this.gap) * PI / 180);
       //control point 2 (outer)
-      this.outerControlLeft[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 4 + this.gap) * PI / 180);
-      this.outerControlRight[i][axis] = this.outerRadius * cos((i * this.pitch - this.pitch / 4 + this.gap) * PI / 180);     
+      this.outerControlLeft[i][axis] = this.outerRadius * cos(((i + 1 / 4) * this.pitch + this.gap) * PI / 180);
+      this.outerControlRight[i][axis] = this.outerRadius * cos(((i - 1 / 4) * this.pitch + this.gap) * PI / 180);     
 
       //y^2 = r^2 - x^2
       axis = 1;
       if(i * this.pitch + this.gap > 180 && i * this.pitch + this.gap < 360 ) sign = -1;
       else sign = 1;
         this.innerAnchor[i][axis] = sign * circle(this.innerRadius, this.innerAnchor[i][0]);
-      if(i * this.pitch + this.pitch / 2 + this.gap > 180 && i * this.pitch + this.pitch / 2 + this.gap < 360 ) sign = -1;
+      if((i + 1 / 2) * this.pitch + this.gap > 180 && (i + 1 / 2) * this.pitch + this.gap < 360 ) sign = -1;
       else sign = 1;
         this.outerAnchor[i][axis] = sign * circle(this.outerRadius, this.outerAnchor[i][0]);
-      if(i * this.pitch + this.pitch / 4 + this.gap > 180 && i * this.pitch + this.pitch / 4 + this.gap < 360 ) sign = -1;   
+      if((i + 1 / 4) * this.pitch + this.gap > 180 && (i + 1 / 4) * this.pitch + this.gap < 360 ) sign = -1;   
       else sign = 1;
         this.innerControlLeft[i][axis] = sign * circle(this.innerRadius, this.innerControlLeft[i][0]);
         this.outerControlLeft[i][axis] = sign * circle(this.outerRadius, this.outerControlLeft[i][0]);
-      if(i * this.pitch - this.pitch / 4 + this.gap > 180 && i * this.pitch - this.pitch / 4 + this.gap < 360 ) sign = -1;
+      if((i - 1 / 4) * this.pitch + this.gap > 180 && (i - 1 / 4) * this.pitch + this.gap < 360 ) sign = -1;
       else sign = 1;
         this.innerControlRight[i][axis] = sign * circle(this.innerRadius, this.innerControlRight[i][0]);
         this.outerControlRight[i][axis] = sign * circle(this.outerRadius, this.outerControlRight[i][0]);

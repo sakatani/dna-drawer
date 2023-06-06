@@ -114,12 +114,10 @@ class Dna {
     strokeWeight(styles.weight); 
     stroke(styles.strokeColor);
     beginShape();
-    const a = 1;
-    const b = 1;
       for(let i = 0; i < this.numTurns + 1; i++){
-        bezier(a * this.innerAnchor[i][0], b * this.innerAnchor[i][1], a * this.innerControlLeft[i][0], b * this.innerControlLeft[i][1], a * this.outerControlLeft[i][0], b * this.outerControlLeft[i][1], a * this.outerAnchor[i][0], b * this.outerAnchor[i][1]);
+        bezier(this.innerAnchor[i][0], this.innerAnchor[i][1], this.innerControlLeft[i][0], this.innerControlLeft[i][1], this.outerControlLeft[i][0], this.outerControlLeft[i][1], this.outerAnchor[i][0], this.outerAnchor[i][1]);
         if(i != this.numTurns){
-          bezier(a * this.outerAnchor[i][0], b * this.outerAnchor[i][1], a * this.outerControlRight[i+1][0], b * this.outerControlRight[i+1][1], a * this.innerControlRight[i+1][0], b * this.innerControlRight[i+1][1], a * this.innerAnchor[i+1][0], b * this.innerAnchor[i+1][1]);         
+          bezier(this.outerAnchor[i][0], this.outerAnchor[i][1], this.outerControlRight[i+1][0], this.outerControlRight[i+1][1], this.innerControlRight[i+1][0], this.innerControlRight[i+1][1], this.innerAnchor[i+1][0], this.innerAnchor[i+1][1]);         
         }
       }   
     endShape();

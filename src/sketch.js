@@ -150,20 +150,16 @@ class CircularDna extends Dna {
 
       //y^2 = r^2 - x^2
       axis = 1;
-      if(i * this.pitch + this.gap > 180 && i * this.pitch + this.gap < 360 ) sign = -1;
-      else sign = 1;
-        this.innerAnchor[i][axis] = sign * circle(this.innerRadius, this.innerAnchor[i][0]);
-      if((i + 1 / 2) * this.pitch + this.gap > 180 && (i + 1 / 2) * this.pitch + this.gap < 360 ) sign = -1;
-      else sign = 1;
-        this.outerAnchor[i][axis] = sign * circle(this.outerRadius, this.outerAnchor[i][0]);
-      if((i + 1 / 4) * this.pitch + this.gap > 180 && (i + 1 / 4) * this.pitch + this.gap < 360 ) sign = -1;   
-      else sign = 1;
-        this.innerControlLeft[i][axis] = sign * circle(this.innerRadius, this.innerControlLeft[i][0]);
-        this.outerControlLeft[i][axis] = sign * circle(this.outerRadius, this.outerControlLeft[i][0]);
-      if((i - 1 / 4) * this.pitch + this.gap > 180 && (i - 1 / 4) * this.pitch + this.gap < 360 ) sign = -1;
-      else sign = 1;
-        this.innerControlRight[i][axis] = sign * circle(this.innerRadius, this.innerControlRight[i][0]);
-        this.outerControlRight[i][axis] = sign * circle(this.outerRadius, this.outerControlRight[i][0]);
+      sign = (i * this.pitch + this.gap < 180 || 360 < i * this.pitch + this.gap) ? 1 : -1;
+      this.innerAnchor[i][axis] = sign * circle(this.innerRadius, this.innerAnchor[i][0]);
+      sign = ((i + 1 / 2) * this.pitch + this.gap < 180 || 360 < (i + 1 / 2) * this.pitch + this.gap) ? 1 : -1;
+      this.outerAnchor[i][axis] = sign * circle(this.outerRadius, this.outerAnchor[i][0]);
+      sign = ((i + 1 / 4) * this.pitch + this.gap < 180 || 360 < (i + 1 / 4) * this.pitch + this.gap) ? 1 : -1;
+      this.innerControlLeft[i][axis] = sign * circle(this.innerRadius, this.innerControlLeft[i][0]);
+      this.outerControlLeft[i][axis] = sign * circle(this.outerRadius, this.outerControlLeft[i][0]);
+      sign = ((i - 1 / 4) * this.pitch + this.gap < 180 || 360 < (i - 1 / 4) * this.pitch + this.gap) ? 1 : -1;
+      this.innerControlRight[i][axis] = sign * circle(this.innerRadius, this.innerControlRight[i][0]);
+      this.outerControlRight[i][axis] = sign * circle(this.outerRadius, this.outerControlRight[i][0]);
     }
     console.log(this.innerControlRight[0][0], this.innerControlRight[0][1], this.outerControlRight[0][0], this.outerControlRight[0][1]);
   }

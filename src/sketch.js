@@ -117,9 +117,15 @@ class Dna {
     stroke(styles.strokeColor);
     beginShape();
       for(let i = 0; i < this.numTurns + 1; i++){
-        bezier(this.innerAnchor[i][0], this.innerAnchor[i][1], this.innerControlLeft[i][0], this.innerControlLeft[i][1], this.outerControlLeft[i][0], this.outerControlLeft[i][1], this.outerAnchor[i][0], this.outerAnchor[i][1]);
+        bezier(this.innerAnchor[i][0], this.innerAnchor[i][1],
+              this.innerControlLeft[i][0], this.innerControlLeft[i][1],
+              this.outerControlLeft[i][0], this.outerControlLeft[i][1],
+              this.outerAnchor[i][0], this.outerAnchor[i][1]);
         if(i != this.numTurns){
-          bezier(this.outerAnchor[i][0], this.outerAnchor[i][1], this.outerControlRight[i+1][0], this.outerControlRight[i+1][1], this.innerControlRight[i+1][0], this.innerControlRight[i+1][1], this.innerAnchor[i+1][0], this.innerAnchor[i+1][1]);         
+          bezier(this.outerAnchor[i][0], this.outerAnchor[i][1],
+            this.outerControlRight[i+1][0], this.outerControlRight[i+1][1],
+            this.innerControlRight[i+1][0], this.innerControlRight[i+1][1],
+            this.innerAnchor[i+1][0], this.innerAnchor[i+1][1]);         
         }
       }   
     endShape();

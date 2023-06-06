@@ -72,10 +72,10 @@ const circularDNA = () => {
 
   const pitch = props.angle / props.turns; //a degree for one this.numTurns
   for (let i = 0; i < props.chains; i++){ 
-    const angleGap = i * props.gap * pitch
-    const dna = new Dna(pitch, angleGap);
+    const gap = i * props.gap * pitch
+    const dna = new CircularDna(pitch, gap);
     dna.calcCoordinates();
-    dna.drawDNA();
+    dna.drawDNA(width / 2, height / 2);
   }
 }
 
@@ -85,75 +85,37 @@ const linearDNA = () => {
 
   const pitch = 2 * props.length / props.turns; //a degree for one this.numTurns
   for (let i = 0; i < props.chains; i++){ 
-    const positionGap = - i * props.gap * pitch
-    const dna = new LinearDna(pitch, positionGap);
+    const gap = - i * props.gap * pitch
+    const dna = new LinearDna(pitch, gap);
     dna.calcCoordinates();
-    dna.drawDNA();
+    dna.drawDNA(100, height / 2);
   }
 }
+
 
 class Dna {
   static NUM_AXES = 2;
 
-  constructor(pitch, angleGap) {
+  constructor(pitch, gap) {
     this.pitch = pitch
-    this.angleGap = angleGap;
+    this.gap = gap;
     this.numTurns = props.turns;
-    this.innerRadius = Math.trunc(props.length / PI);
-    this.outerRadius = this.innerRadius + props.width;
-    console.log(Dna.NUM_AXES);
+    this.length = props.length;
+    this.width = props.width;
 
-    this.innerAnchor = Array.from({length: this.numTurns + 1}, () => Array(Dna.NUM_AXES).fill(0));
-    this.outerAnchor = Array.from({length: this.numTurns + 1}, () => Array(Dna.NUM_AXES).fill(0));
+    this.innerAnchor = Array.from({length: this.numTurns + 1}, () => new Float32Array(Dna.NUM_AXES));
+    this.outerAnchor = Array.from({length: this.numTurns + 1}, () => new Float32Array(Dna.NUM_AXES));
     this.innerControlLeft = Array.from({length: this.numTurns + 1}, () => new Float32Array(Dna.NUM_AXES));
     this.outerControlLeft = Array.from({length: this.numTurns + 1}, () => new Float32Array(Dna.NUM_AXES));
     this.innerControlRight = Array.from({length: this.numTurns + 1}, () => new Float32Array(Dna.NUM_AXES));
     this.outerControlRight = Array.from({length: this.numTurns + 1}, () => new Float32Array(Dna.NUM_AXES));
   }
 
-  calcCoordinates() {
-    for(let i = 0; i < this.numTurns + 1; i++){
-      const axis = 0;
-        //initiation point (inner circle)
-        this.innerAnchor[i][axis] = this.innerRadius * cos((i * this.pitch + this.angleGap) * PI / 180);
-        //end point (outer circle)
-        this.outerAnchor[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 2 + this.angleGap) * PI / 180);
-        //control point 1 (inner)
-        this.innerControlLeft[i][axis] = this.innerRadius * cos((i * this.pitch + this.pitch / 4 + this.angleGap) * PI / 180);
-        //control point 2 (outer)
-        this.outerControlLeft[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 4 + this.angleGap) * PI / 180);
-        this.innerControlRight[i][axis] = this.innerRadius * cos((i * this.pitch - this.pitch / 4 + this.angleGap) * PI / 180);
-        this.outerControlRight[i][axis] = this.outerRadius * cos((i * this.pitch - this.pitch / 4 + this.angleGap) * PI / 180);     
-        //console.log(innerAnchor[i][0],innerAnchor[i][1],outerAnchor[i][0],outerAnchor[i][1]);  
-    }
-    //console.log("max_pitch", this.numTurns*pitch);
-    
-    //y^2 = r^2 - x^2
-    let sign = 1;
-    for(let i = 0; i < this.numTurns + 1; i++){
-      const axis = 1;
-      if(i * this.pitch + this.angleGap > 180 && i * this.pitch + this.angleGap < 360 ) sign = -1;
-      else sign = 1;
-        this.innerAnchor[i][axis] = sign * circle(this.innerRadius, this.innerAnchor[i][0]);
-      if(i * this.pitch + this.pitch / 2 + this.angleGap > 180 && i * this.pitch + this.pitch / 2 + this.angleGap < 360 ) sign = -1;
-      else sign = 1;
-        this.outerAnchor[i][axis] = sign * circle(this.outerRadius, this.outerAnchor[i][0]);
-      if(i * this.pitch + this.pitch / 4 + this.angleGap > 180 && i * this.pitch + this.pitch / 4 + this.angleGap < 360 ) sign = -1;   
-      else sign = 1;
-        this.innerControlLeft[i][axis] = sign * circle(this.innerRadius, this.innerControlLeft[i][0]);
-        this.outerControlLeft[i][axis] = sign * circle(this.outerRadius, this.outerControlLeft[i][0]);
-      if(i * this.pitch - this.pitch / 4 + this.angleGap > 180 && i * this.pitch - this.pitch / 4 + this.angleGap < 360 ) sign = -1;
-      else sign = 1;
-        this.innerControlRight[i][axis] = sign * circle(this.innerRadius, this.innerControlRight[i][0]);
-        this.outerControlRight[i][axis] = sign * circle(this.outerRadius, this.outerControlRight[i][0]);
-        //console.log(i, i * this.pitch + this.angleGap, i * this.pitch + this.angleGap + this.pitch / 4, i * this.pitch + this.angleGap - this.pitch / 4); 
-    }
-    console.log(this.innerControlRight[0][0], this.innerControlRight[0][1], this.outerControlRight[0][0], this.outerControlRight[0][1]);
-  }
+  calcCoordinates() {}
 
-  drawDNA() {
+  drawDNA(x, y) {
     push();
-    translate(width / 2, height / 2);
+    translate(x, y);
     strokeWeight(styles.weight); 
     stroke(styles.strokeColor);
     beginShape();
@@ -174,35 +136,68 @@ class Dna {
 
 }
 
-class LinearDna {
-  static NUM_AXES = 2;
+class CircularDna extends Dna {
 
-  constructor(pitch, positionGap) {
-    this.pitch = pitch
-    this.positionGap = positionGap;
-    this.numTurns = props.turns;
-    this.width = props.width;
-
-    this.innerAnchor = Array.from({length: this.numTurns + 1}, () => new Float32Array(LinearDna.NUM_AXES));
-    this.outerAnchor = Array.from({length: this.numTurns + 1}, () => new Float32Array(LinearDna.NUM_AXES));
-    this.innerControlLeft = Array.from({length: this.numTurns + 1}, () => new Float32Array(LinearDna.NUM_AXES));
-    this.outerControlLeft = Array.from({length: this.numTurns + 1}, () => new Float32Array(LinearDna.NUM_AXES));
-    this.innerControlRight = Array.from({length: this.numTurns + 1}, () => new Float32Array(LinearDna.NUM_AXES));
-    this.outerControlRight = Array.from({length: this.numTurns + 1}, () => new Float32Array(LinearDna.NUM_AXES));
+  constructor(pitch, gap) {
+    super(pitch, gap);
+    this.innerRadius = Math.trunc(this.length / PI);
+    this.outerRadius = this.innerRadius + this.width;
   }
 
   calcCoordinates() {
     for(let i = 0; i < this.numTurns + 1; i++){
       const axis = 0;
+        //initiation point (inner circle)
+        this.innerAnchor[i][axis] = this.innerRadius * cos((i * this.pitch + this.gap) * PI / 180);
+        //end point (outer circle)
+        this.outerAnchor[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 2 + this.gap) * PI / 180);
+        //control point 1 (inner)
+        this.innerControlLeft[i][axis] = this.innerRadius * cos((i * this.pitch + this.pitch / 4 + this.gap) * PI / 180);
+        //control point 2 (outer)
+        this.outerControlLeft[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 4 + this.gap) * PI / 180);
+        this.innerControlRight[i][axis] = this.innerRadius * cos((i * this.pitch - this.pitch / 4 + this.gap) * PI / 180);
+        this.outerControlRight[i][axis] = this.outerRadius * cos((i * this.pitch - this.pitch / 4 + this.gap) * PI / 180);     
+        //console.log(innerAnchor[i][0],innerAnchor[i][1],outerAnchor[i][0],outerAnchor[i][1]);  
+    }
+    //console.log("max_pitch", this.numTurns*pitch);
+    
+    //y^2 = r^2 - x^2
+    let sign = 1;
+    for(let i = 0; i < this.numTurns + 1; i++){
+      const axis = 1;
+      if(i * this.pitch + this.gap > 180 && i * this.pitch + this.gap < 360 ) sign = -1;
+      else sign = 1;
+        this.innerAnchor[i][axis] = sign * circle(this.innerRadius, this.innerAnchor[i][0]);
+      if(i * this.pitch + this.pitch / 2 + this.gap > 180 && i * this.pitch + this.pitch / 2 + this.gap < 360 ) sign = -1;
+      else sign = 1;
+        this.outerAnchor[i][axis] = sign * circle(this.outerRadius, this.outerAnchor[i][0]);
+      if(i * this.pitch + this.pitch / 4 + this.gap > 180 && i * this.pitch + this.pitch / 4 + this.gap < 360 ) sign = -1;   
+      else sign = 1;
+        this.innerControlLeft[i][axis] = sign * circle(this.innerRadius, this.innerControlLeft[i][0]);
+        this.outerControlLeft[i][axis] = sign * circle(this.outerRadius, this.outerControlLeft[i][0]);
+      if(i * this.pitch - this.pitch / 4 + this.gap > 180 && i * this.pitch - this.pitch / 4 + this.gap < 360 ) sign = -1;
+      else sign = 1;
+        this.innerControlRight[i][axis] = sign * circle(this.innerRadius, this.innerControlRight[i][0]);
+        this.outerControlRight[i][axis] = sign * circle(this.outerRadius, this.outerControlRight[i][0]);
+        //console.log(i, i * this.pitch + this.gap, i * this.pitch + this.gap + this.pitch / 4, i * this.pitch + this.gap - this.pitch / 4); 
+    }
+    console.log(this.innerControlRight[0][0], this.innerControlRight[0][1], this.outerControlRight[0][0], this.outerControlRight[0][1]);
+  }
+}
+
+class LinearDna extends Dna {
+  calcCoordinates() {
+    for(let i = 0; i < this.numTurns + 1; i++){
+      const axis = 0;
       //initiation point
-      this.innerAnchor[i][axis] = i * this.pitch + this.positionGap;
+      this.innerAnchor[i][axis] = i * this.pitch + this.gap;
       //end point
-      this.outerAnchor[i][axis] = (i + 1/2) * this.pitch + this.positionGap;
+      this.outerAnchor[i][axis] = (i + 1/2) * this.pitch + this.gap;
       //control point
-      this.innerControlLeft[i][axis] = (i + 1/4) * this.pitch + this.positionGap;
-      this.outerControlLeft[i][axis] = (i + 1/4) * this.pitch + this.positionGap;
-      this.innerControlRight[i][axis] = (i - 1/4) * this.pitch + this.positionGap;
-      this.outerControlRight[i][axis] = (i - 1/4) * this.pitch + this.positionGap;
+      this.innerControlLeft[i][axis] = (i + 1/4) * this.pitch + this.gap;
+      this.outerControlLeft[i][axis] = (i + 1/4) * this.pitch + this.gap;
+      this.innerControlRight[i][axis] = (i - 1/4) * this.pitch + this.gap;
+      this.outerControlRight[i][axis] = (i - 1/4) * this.pitch + this.gap;
     }
 
     for(let i = 0; i < this.numTurns + 1; i++){
@@ -216,26 +211,6 @@ class LinearDna {
     }
     console.log(this.innerControlRight[0][0], this.innerControlRight[0][1], this.outerControlRight[0][0], this.outerControlRight[0][1]);
   }
-
-  drawDNA() {
-    push();
-    translate(100, height / 2);
-    strokeWeight(styles.weight); 
-    stroke(styles.strokeColor);
-    beginShape();
-    const a = 1;
-    const b = 1;
-      for(let i = 0; i < this.numTurns + 1; i++){
-        bezier(a * this.innerAnchor[i][0], b * this.innerAnchor[i][1], a * this.innerControlLeft[i][0], b * this.innerControlLeft[i][1], a * this.outerControlLeft[i][0], b * this.outerControlLeft[i][1], a * this.outerAnchor[i][0], b * this.outerAnchor[i][1]);
-        if(i != this.numTurns){
-          //console.log(outerAnchor[i][0],outerAnchor[i][1],innerAnchor[i+1][0],innerAnchor[i+1][1]);
-          bezier(a * this.outerAnchor[i][0], b * this.outerAnchor[i][1], a * this.outerControlRight[i+1][0], b * this.outerControlRight[i+1][1], a * this.innerControlRight[i+1][0], b * this.innerControlRight[i+1][1], a * this.innerAnchor[i+1][0], b * this.innerAnchor[i+1][1]);         
-        }
-      }
-    endShape();
-    pop();  
-  }
-
 }
 
 const circle = (x, y) => {

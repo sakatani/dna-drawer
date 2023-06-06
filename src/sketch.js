@@ -134,24 +134,22 @@ class CircularDna extends Dna {
   }
 
   calcCoordinates() {
-    for(let i = 0; i < this.numTurns + 1; i++){
-      const axis = 0;
-        //initiation point (inner circle)
-        this.innerAnchor[i][axis] = this.innerRadius * cos((i * this.pitch + this.gap) * PI / 180);
-        //end point (outer circle)
-        this.outerAnchor[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 2 + this.gap) * PI / 180);
-        //control point 1 (inner)
-        this.innerControlLeft[i][axis] = this.innerRadius * cos((i * this.pitch + this.pitch / 4 + this.gap) * PI / 180);
-        this.innerControlRight[i][axis] = this.innerRadius * cos((i * this.pitch - this.pitch / 4 + this.gap) * PI / 180);
-        //control point 2 (outer)
-        this.outerControlLeft[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 4 + this.gap) * PI / 180);
-        this.outerControlRight[i][axis] = this.outerRadius * cos((i * this.pitch - this.pitch / 4 + this.gap) * PI / 180);     
-    }
-    
-    //y^2 = r^2 - x^2
     let sign = 1;
     for(let i = 0; i < this.numTurns + 1; i++){
-      const axis = 1;
+      let axis = 0;
+      //initiation point (inner circle)
+      this.innerAnchor[i][axis] = this.innerRadius * cos((i * this.pitch + this.gap) * PI / 180);
+      //end point (outer circle)
+      this.outerAnchor[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 2 + this.gap) * PI / 180);
+      //control point 1 (inner)
+      this.innerControlLeft[i][axis] = this.innerRadius * cos((i * this.pitch + this.pitch / 4 + this.gap) * PI / 180);
+      this.innerControlRight[i][axis] = this.innerRadius * cos((i * this.pitch - this.pitch / 4 + this.gap) * PI / 180);
+      //control point 2 (outer)
+      this.outerControlLeft[i][axis] = this.outerRadius * cos((i * this.pitch + this.pitch / 4 + this.gap) * PI / 180);
+      this.outerControlRight[i][axis] = this.outerRadius * cos((i * this.pitch - this.pitch / 4 + this.gap) * PI / 180);     
+
+      //y^2 = r^2 - x^2
+      axis = 1;
       if(i * this.pitch + this.gap > 180 && i * this.pitch + this.gap < 360 ) sign = -1;
       else sign = 1;
         this.innerAnchor[i][axis] = sign * circle(this.innerRadius, this.innerAnchor[i][0]);
@@ -174,7 +172,7 @@ class CircularDna extends Dna {
 class LinearDna extends Dna {
   calcCoordinates() {
     for(let i = 0; i < this.numTurns + 1; i++){
-      const axis = 0;
+      let axis = 0;
       //initiation point
       this.innerAnchor[i][axis] = i * this.pitch + this.gap;
       //end point
@@ -184,10 +182,8 @@ class LinearDna extends Dna {
       this.innerControlRight[i][axis] = (i - 1/4) * this.pitch + this.gap;
       this.outerControlLeft[i][axis] = (i + 1/4) * this.pitch + this.gap;
       this.outerControlRight[i][axis] = (i - 1/4) * this.pitch + this.gap;
-    }
 
-    for(let i = 0; i < this.numTurns + 1; i++){
-      const axis = 1;
+      axis = 1;
       this.innerAnchor[i][axis] = 0;
       this.outerAnchor[i][axis] = this.width;
       this.innerControlLeft[i][axis] = 0;

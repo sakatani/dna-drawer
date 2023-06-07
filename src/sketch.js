@@ -106,7 +106,9 @@ class Dna {
     this.outerControlRight = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
   }
 
-  calcCoordinates() {}
+  calcCoordinates() {
+    console.log(this.innerControlRight[0][0], this.innerControlRight[0][1], this.outerControlRight[0][0], this.outerControlRight[0][1]);
+  }
 
   drawDNA(x, y) {
     push();
@@ -167,7 +169,7 @@ class CircularDna extends Dna {
       this.innerControlRight[i][axis] = circleYCoordinate(angle, this.innerRadius, this.innerControlRight[i][0]);
       this.outerControlRight[i][axis] = circleYCoordinate(angle, this.outerRadius, this.outerControlRight[i][0]);
     }
-    console.log(this.innerControlRight[0][0], this.innerControlRight[0][1], this.outerControlRight[0][0], this.outerControlRight[0][1]);
+    super.calcCoordinates();
   }
 }
 
@@ -193,7 +195,7 @@ class LinearDna extends Dna {
       this.outerControlLeft[i][axis] = this.width;
       this.outerControlRight[i][axis] = this.width;
     }
-    console.log(this.innerControlRight[0][0], this.innerControlRight[0][1], this.outerControlRight[0][0], this.outerControlRight[0][1]);
+    super.calcCoordinates();
   }
 }
 

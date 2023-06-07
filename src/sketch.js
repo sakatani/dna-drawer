@@ -89,8 +89,6 @@ const linearDNA = () => {
 }
 
 class Dna {
-  static NUM_AXES = 2;
-
   constructor(pitch, gap) {
     this.pitch = pitch
     this.gap = gap;
@@ -98,16 +96,16 @@ class Dna {
     this.length = props.length;
     this.width = props.width;
 
-    this.innerAnchor = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
-    this.outerAnchor = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
-    this.innerControlLeft = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
-    this.outerControlLeft = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
-    this.innerControlRight = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
-    this.outerControlRight = Array.from({length: this.numTurns + 1}, () => new Array(Dna.NUM_AXES));
+    this.innerAnchor = Array(this.numTurns + 1).fill(null).map(() => ({}));
+    this.outerAnchor = Array(this.numTurns + 1).fill(null).map(() => ({}));
+    this.innerControlLeft = Array(this.numTurns + 1).fill(null).map(() => ({}));
+    this.outerControlLeft = Array(this.numTurns + 1).fill(null).map(() => ({}));
+    this.innerControlRight = Array(this.numTurns + 1).fill(null).map(() => ({}));
+    this.outerControlRight = Array(this.numTurns + 1).fill(null).map(() => ({}));
   }
 
   calcCoordinates() {
-    console.log(this.innerControlRight[0][0], this.innerControlRight[0][1], this.outerControlRight[0][0], this.outerControlRight[0][1]);
+    console.log(this.innerControlRight[0].x, this.innerControlRight[0].y, this.outerControlRight[0].x, this.outerControlRight[0].y);
   }
 
   drawDNA(x, y) {
@@ -117,15 +115,15 @@ class Dna {
     stroke(styles.strokeColor);
     beginShape();
       for(let i = 0; i <= this.numTurns; i++){
-        bezier(this.innerAnchor[i][0], this.innerAnchor[i][1],
-              this.innerControlLeft[i][0], this.innerControlLeft[i][1],
-              this.outerControlLeft[i][0], this.outerControlLeft[i][1],
-              this.outerAnchor[i][0], this.outerAnchor[i][1]);
+        bezier(this.innerAnchor[i].x, this.innerAnchor[i].y,
+              this.innerControlLeft[i].x, this.innerControlLeft[i].y,
+              this.outerControlLeft[i].x, this.outerControlLeft[i].y,
+              this.outerAnchor[i].x, this.outerAnchor[i].y);
         if(i != this.numTurns){
-          bezier(this.outerAnchor[i][0], this.outerAnchor[i][1],
-            this.outerControlRight[i+1][0], this.outerControlRight[i+1][1],
-            this.innerControlRight[i+1][0], this.innerControlRight[i+1][1],
-            this.innerAnchor[i+1][0], this.innerAnchor[i+1][1]);         
+          bezier(this.outerAnchor[i].x, this.outerAnchor[i].y,
+            this.outerControlRight[i+1].x, this.outerControlRight[i+1].y,
+            this.innerControlRight[i+1].x, this.innerControlRight[i+1].y,
+            this.innerAnchor[i+1].x, this.innerAnchor[i+1].y);         
         }
       }   
     endShape();
@@ -146,24 +144,24 @@ class CircularDna extends Dna {
     for(let i = 0; i <= this.numTurns; i++){     
       //initiation point (inner circle)
       let angle = i * this.pitch + this.gap;
-      this.innerAnchor[i][0] = this.innerRadius * cos(angle * RAD);
-      this.innerAnchor[i][1] = circleYCoordinate(angle, this.innerRadius, this.innerAnchor[i][0]);
+      this.innerAnchor[i].x = this.innerRadius * cos(angle * RAD);
+      this.innerAnchor[i].y = circleYCoordinate(angle, this.innerRadius, this.innerAnchor[i].x);
       //end point (outer circle)
       angle = (i + 1 / 2) * this.pitch + this.gap;
-      this.outerAnchor[i][0] = this.outerRadius * cos(angle * RAD);
-      this.outerAnchor[i][1] = circleYCoordinate(angle, this.outerRadius, this.outerAnchor[i][0]);
+      this.outerAnchor[i].x = this.outerRadius * cos(angle * RAD);
+      this.outerAnchor[i].y = circleYCoordinate(angle, this.outerRadius, this.outerAnchor[i].x);
       //control point 1 (inner)
       angle = (i + 1 / 4) * this.pitch + this.gap;
-      this.innerControlLeft[i][0] = this.innerRadius * cos(angle * RAD);
-      this.outerControlLeft[i][0] = this.outerRadius * cos(angle * RAD);
-      this.innerControlLeft[i][1] = circleYCoordinate(angle, this.innerRadius, this.innerControlLeft[i][0]);
-      this.outerControlLeft[i][1] = circleYCoordinate(angle, this.outerRadius, this.outerControlLeft[i][0]);
+      this.innerControlLeft[i].x = this.innerRadius * cos(angle * RAD);
+      this.outerControlLeft[i].x = this.outerRadius * cos(angle * RAD);
+      this.innerControlLeft[i].y = circleYCoordinate(angle, this.innerRadius, this.innerControlLeft[i].x);
+      this.outerControlLeft[i].y = circleYCoordinate(angle, this.outerRadius, this.outerControlLeft[i].x);
       //control point 2 (outer)
       angle = (i - 1 / 4) * this.pitch + this.gap;
-      this.innerControlRight[i][0] = this.innerRadius * cos(angle * RAD);
-      this.outerControlRight[i][0] = this.outerRadius * cos(angle * RAD);
-      this.innerControlRight[i][1] = circleYCoordinate(angle, this.innerRadius, this.innerControlRight[i][0]);
-      this.outerControlRight[i][1] = circleYCoordinate(angle, this.outerRadius, this.outerControlRight[i][0]);
+      this.innerControlRight[i].x = this.innerRadius * cos(angle * RAD);
+      this.outerControlRight[i].x = this.outerRadius * cos(angle * RAD);
+      this.innerControlRight[i].y = circleYCoordinate(angle, this.innerRadius, this.innerControlRight[i].x);
+      this.outerControlRight[i].y = circleYCoordinate(angle, this.outerRadius, this.outerControlRight[i].x);
     }
     super.calcCoordinates();
   }
@@ -172,24 +170,21 @@ class CircularDna extends Dna {
 class LinearDna extends Dna {
   calcCoordinates() {
     for(let i = 0; i <= this.numTurns; i++){
-      let axis = 0;
       //initiation point
-      this.innerAnchor[i][axis] = i * this.pitch + this.gap;
+      this.innerAnchor[i].x = i * this.pitch + this.gap;
+      this.innerAnchor[i].y = 0;
       //end point
-      this.outerAnchor[i][axis] = (i + 1/2) * this.pitch + this.gap;
+      this.outerAnchor[i].x = (i + 1/2) * this.pitch + this.gap;
+      this.outerAnchor[i].y = this.width;
       //control point
-      this.innerControlLeft[i][axis] = (i + 1/4) * this.pitch + this.gap;
-      this.innerControlRight[i][axis] = (i - 1/4) * this.pitch + this.gap;
-      this.outerControlLeft[i][axis] = (i + 1/4) * this.pitch + this.gap;
-      this.outerControlRight[i][axis] = (i - 1/4) * this.pitch + this.gap;
-
-      axis = 1;
-      this.innerAnchor[i][axis] = 0;
-      this.outerAnchor[i][axis] = this.width;
-      this.innerControlLeft[i][axis] = 0;
-      this.innerControlRight[i][axis] = 0;
-      this.outerControlLeft[i][axis] = this.width;
-      this.outerControlRight[i][axis] = this.width;
+      this.innerControlLeft[i].x = (i + 1/4) * this.pitch + this.gap;
+      this.innerControlLeft[i].y = 0;
+      this.innerControlRight[i].x = (i - 1/4) * this.pitch + this.gap;
+      this.innerControlRight[i].y = 0;
+      this.outerControlLeft[i].x = (i + 1/4) * this.pitch + this.gap;
+      this.outerControlLeft[i].y = this.width;
+      this.outerControlRight[i].x = (i - 1/4) * this.pitch + this.gap;
+      this.outerControlRight[i].y = this.width;
     }
     super.calcCoordinates();
   }

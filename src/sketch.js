@@ -1,3 +1,7 @@
+const FULL_ANGLE = 360;
+const STRAIGHT_ANGLE = 180;
+
+
 // gui props
 const styles = {
   backgroundColor: '#000000',
@@ -140,7 +144,7 @@ class CircularDna extends Dna {
   }
 
   calcCoordinates() {
-    const RAD = PI / 180;
+    const RAD = PI / STRAIGHT_ANGLE;
     let sign = 1;
     for(let i = 0; i < this.numTurns + 1; i++){
       let axis = 0;
@@ -157,14 +161,14 @@ class CircularDna extends Dna {
 
       //y^2 = r^2 - x^2
       axis = 1;
-      sign = (i * this.pitch + this.gap < 180 || 360 < i * this.pitch + this.gap) ? 1 : -1;
+      sign = (i * this.pitch + this.gap < STRAIGHT_ANGLE || FULL_ANGLE < i * this.pitch + this.gap) ? 1 : -1;
       this.innerAnchor[i][axis] = sign * circle(this.innerRadius, this.innerAnchor[i][0]);
-      sign = ((i + 1 / 2) * this.pitch + this.gap < 180 || 360 < (i + 1 / 2) * this.pitch + this.gap) ? 1 : -1;
+      sign = ((i + 1 / 2) * this.pitch + this.gap < STRAIGHT_ANGLE || FULL_ANGLE < (i + 1 / 2) * this.pitch + this.gap) ? 1 : -1;
       this.outerAnchor[i][axis] = sign * circle(this.outerRadius, this.outerAnchor[i][0]);
-      sign = ((i + 1 / 4) * this.pitch + this.gap < 180 || 360 < (i + 1 / 4) * this.pitch + this.gap) ? 1 : -1;
+      sign = ((i + 1 / 4) * this.pitch + this.gap < STRAIGHT_ANGLE || FULL_ANGLE < (i + 1 / 4) * this.pitch + this.gap) ? 1 : -1;
       this.innerControlLeft[i][axis] = sign * circle(this.innerRadius, this.innerControlLeft[i][0]);
       this.outerControlLeft[i][axis] = sign * circle(this.outerRadius, this.outerControlLeft[i][0]);
-      sign = ((i - 1 / 4) * this.pitch + this.gap < 180 || 360 < (i - 1 / 4) * this.pitch + this.gap) ? 1 : -1;
+      sign = ((i - 1 / 4) * this.pitch + this.gap < STRAIGHT_ANGLE || FULL_ANGLE < (i - 1 / 4) * this.pitch + this.gap) ? 1 : -1;
       this.innerControlRight[i][axis] = sign * circle(this.innerRadius, this.innerControlRight[i][0]);
       this.outerControlRight[i][axis] = sign * circle(this.outerRadius, this.outerControlRight[i][0]);
     }

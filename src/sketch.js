@@ -116,7 +116,7 @@ class Dna {
     strokeWeight(styles.weight); 
     stroke(styles.strokeColor);
     beginShape();
-      for(let i = 0; i < this.numTurns + 1; i++){
+      for(let i = 0; i <= this.numTurns; i++){
         bezier(this.innerAnchor[i][0], this.innerAnchor[i][1],
               this.innerControlLeft[i][0], this.innerControlLeft[i][1],
               this.outerControlLeft[i][0], this.outerControlLeft[i][1],
@@ -143,7 +143,7 @@ class CircularDna extends Dna {
 
   calcCoordinates() {
     const RAD = PI / 180;
-    for(let i = 0; i < this.numTurns + 1; i++){
+    for(let i = 0; i <= this.numTurns; i++){
       let axis = 0;
       //initiation point (inner circle)
       this.innerAnchor[i][axis] = this.innerRadius * cos((i * this.pitch + this.gap) * RAD);
@@ -175,7 +175,7 @@ class CircularDna extends Dna {
 
 class LinearDna extends Dna {
   calcCoordinates() {
-    for(let i = 0; i < this.numTurns + 1; i++){
+    for(let i = 0; i <= this.numTurns; i++){
       let axis = 0;
       //initiation point
       this.innerAnchor[i][axis] = i * this.pitch + this.gap;

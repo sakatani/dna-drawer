@@ -178,10 +178,10 @@ class LinearDna extends Dna {
       //control points
       this.innerControlLeft[i].x = (i + 1/4) * this.pitch + this.gap;
       this.innerControlLeft[i].y = 0;
-      this.innerControlRight[i].x = (i - 1/4) * this.pitch + this.gap;
-      this.innerControlRight[i].y = 0;
       this.outerControlLeft[i].x = (i + 1/4) * this.pitch + this.gap;
       this.outerControlLeft[i].y = this.width;
+      this.innerControlRight[i].x = (i - 1/4) * this.pitch + this.gap;
+      this.innerControlRight[i].y = 0;
       this.outerControlRight[i].x = (i - 1/4) * this.pitch + this.gap;
       this.outerControlRight[i].y = this.width;
     }

@@ -143,31 +143,27 @@ class CircularDna extends Dna {
 
   calcCoordinates() {
     const RAD = PI / 180;
-    for(let i = 0; i <= this.numTurns; i++){
-      let axis = 0;
+    for(let i = 0; i <= this.numTurns; i++){     
       //initiation point (inner circle)
-      this.innerAnchor[i][axis] = this.innerRadius * cos((i * this.pitch + this.gap) * RAD);
-      //end point (outer circle)
-      this.outerAnchor[i][axis] = this.outerRadius * cos(((i + 1 / 2) * this.pitch + this.gap) * RAD);
-      //control point 1 (inner)
-      this.innerControlLeft[i][axis] = this.innerRadius * cos(((i + 1 / 4) * this.pitch + this.gap) * RAD);
-      this.innerControlRight[i][axis] = this.innerRadius * cos(((i - 1 / 4) * this.pitch + this.gap) * RAD);
-      //control point 2 (outer)
-      this.outerControlLeft[i][axis] = this.outerRadius * cos(((i + 1 / 4) * this.pitch + this.gap) * RAD);
-      this.outerControlRight[i][axis] = this.outerRadius * cos(((i - 1 / 4) * this.pitch + this.gap) * RAD);     
-
-      //y^2 = r^2 - x^2
-      axis = 1;
       let angle = i * this.pitch + this.gap;
-      this.innerAnchor[i][axis] = circleYCoordinate(angle, this.innerRadius, this.innerAnchor[i][0]);
+      this.innerAnchor[i][0] = this.innerRadius * cos(angle * RAD);
+      this.innerAnchor[i][1] = circleYCoordinate(angle, this.innerRadius, this.innerAnchor[i][0]);
+      //end point (outer circle)
       angle = (i + 1 / 2) * this.pitch + this.gap;
-      this.outerAnchor[i][axis] = circleYCoordinate(angle, this.outerRadius, this.outerAnchor[i][0]);
+      this.outerAnchor[i][0] = this.outerRadius * cos(angle * RAD);
+      this.outerAnchor[i][1] = circleYCoordinate(angle, this.outerRadius, this.outerAnchor[i][0]);
+      //control point 1 (inner)
       angle = (i + 1 / 4) * this.pitch + this.gap;
-      this.innerControlLeft[i][axis] = circleYCoordinate(angle, this.innerRadius, this.innerControlLeft[i][0]);
-      this.outerControlLeft[i][axis] = circleYCoordinate(angle, this.outerRadius, this.outerControlLeft[i][0]);
+      this.innerControlLeft[i][0] = this.innerRadius * cos(angle * RAD);
+      this.outerControlLeft[i][0] = this.outerRadius * cos(angle * RAD);
+      this.innerControlLeft[i][1] = circleYCoordinate(angle, this.innerRadius, this.innerControlLeft[i][0]);
+      this.outerControlLeft[i][1] = circleYCoordinate(angle, this.outerRadius, this.outerControlLeft[i][0]);
+      //control point 2 (outer)
       angle = (i - 1 / 4) * this.pitch + this.gap;
-      this.innerControlRight[i][axis] = circleYCoordinate(angle, this.innerRadius, this.innerControlRight[i][0]);
-      this.outerControlRight[i][axis] = circleYCoordinate(angle, this.outerRadius, this.outerControlRight[i][0]);
+      this.innerControlRight[i][0] = this.innerRadius * cos(angle * RAD);
+      this.outerControlRight[i][0] = this.outerRadius * cos(angle * RAD);
+      this.innerControlRight[i][1] = circleYCoordinate(angle, this.innerRadius, this.innerControlRight[i][0]);
+      this.outerControlRight[i][1] = circleYCoordinate(angle, this.outerRadius, this.outerControlRight[i][0]);
     }
     super.calcCoordinates();
   }
@@ -200,6 +196,7 @@ class LinearDna extends Dna {
 }
 
 const circleYCoordinate = (angle, r, x) => {
+  // y^2 = r^2 - x^2
   sign = (180 < angle && angle < 360) ? -1 : 1;
   return sign * sqrt(sq(r) - sq(x));
 }

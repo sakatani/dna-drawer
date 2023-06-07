@@ -150,13 +150,12 @@ class CircularDna extends Dna {
       angle = (i + 1 / 2) * this.pitch + this.gap;
       this.outerAnchor[i].x = this.outerRadius * cos(angle * RAD);
       this.outerAnchor[i].y = circleYCoordinate(angle, this.outerRadius, this.outerAnchor[i].x);
-      //control point 1 (inner)
+      //control points
       angle = (i + 1 / 4) * this.pitch + this.gap;
       this.innerControlLeft[i].x = this.innerRadius * cos(angle * RAD);
       this.outerControlLeft[i].x = this.outerRadius * cos(angle * RAD);
       this.innerControlLeft[i].y = circleYCoordinate(angle, this.innerRadius, this.innerControlLeft[i].x);
       this.outerControlLeft[i].y = circleYCoordinate(angle, this.outerRadius, this.outerControlLeft[i].x);
-      //control point 2 (outer)
       angle = (i - 1 / 4) * this.pitch + this.gap;
       this.innerControlRight[i].x = this.innerRadius * cos(angle * RAD);
       this.outerControlRight[i].x = this.outerRadius * cos(angle * RAD);
@@ -176,7 +175,7 @@ class LinearDna extends Dna {
       //end point
       this.outerAnchor[i].x = (i + 1/2) * this.pitch + this.gap;
       this.outerAnchor[i].y = this.width;
-      //control point
+      //control points
       this.innerControlLeft[i].x = (i + 1/4) * this.pitch + this.gap;
       this.innerControlLeft[i].y = 0;
       this.innerControlRight[i].x = (i - 1/4) * this.pitch + this.gap;

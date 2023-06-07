@@ -1,5 +1,3 @@
-const RAD = PI / 180;
-
 // gui props
 const styles = {
   backgroundColor: '#000000',
@@ -142,6 +140,7 @@ class CircularDna extends Dna {
   }
 
   calcCoordinates() {
+    const RAD = PI / 180;
     let sign = 1;
     for(let i = 0; i < this.numTurns + 1; i++){
       let axis = 0;

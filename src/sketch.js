@@ -141,22 +141,23 @@ class CircularDna extends Dna {
 
   calcCoordinates() {
     const RAD = PI / 180;
+    const START_ANGLE = 90;
     for(let i = 0; i <= this.numTurns; i++){     
       //initiation point (inner circle)
-      let angle = i * this.pitch + this.gap;
+      let angle = START_ANGLE + i * this.pitch + this.gap;
       this.innerAnchor[i].x = this.innerRadius * cos(angle * RAD);
       this.innerAnchor[i].y = circleYCoordinate(angle, this.innerRadius, this.innerAnchor[i].x);
       //end point (outer circle)
-      angle = (i + 1 / 2) * this.pitch + this.gap;
+      angle = START_ANGLE + (i + 1 / 2) * this.pitch + this.gap;
       this.outerAnchor[i].x = this.outerRadius * cos(angle * RAD);
       this.outerAnchor[i].y = circleYCoordinate(angle, this.outerRadius, this.outerAnchor[i].x);
       //control points
-      angle = (i + 1 / 4) * this.pitch + this.gap;
+      angle = START_ANGLE + (i + 1 / 4) * this.pitch + this.gap;
       this.innerControlLeft[i].x = this.innerRadius * cos(angle * RAD);
       this.outerControlLeft[i].x = this.outerRadius * cos(angle * RAD);
       this.innerControlLeft[i].y = circleYCoordinate(angle, this.innerRadius, this.innerControlLeft[i].x);
       this.outerControlLeft[i].y = circleYCoordinate(angle, this.outerRadius, this.outerControlLeft[i].x);
-      angle = (i - 1 / 4) * this.pitch + this.gap;
+      angle = START_ANGLE + (i - 1 / 4) * this.pitch + this.gap;
       this.innerControlRight[i].x = this.innerRadius * cos(angle * RAD);
       this.outerControlRight[i].x = this.outerRadius * cos(angle * RAD);
       this.innerControlRight[i].y = circleYCoordinate(angle, this.innerRadius, this.innerControlRight[i].x);

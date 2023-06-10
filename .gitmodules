@@ -1,0 +1,3 @@
+[submodule "p5.gui"]
+	path = p5.gui
+	url = https://github.com/bitcraftlab/p5.gui/

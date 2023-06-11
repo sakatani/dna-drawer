@@ -1,2 +1,32 @@
-# dna-drawer
+# DNA Drawer
 DNA Drawing Tool Using P5.js
+
+# Demo
+DNA Drawer is running at https://sakatani.github.io/dna-drawer/
+
+# Usage
+![image](https://github.com/sakatani/dna-drawer/assets/29421510/6aafbd0b-fda9-4aa6-8c5b-ef0833cce99e)
+You can change DNA properites and styles listed below:
+- Shape 
+  - circular or linear DNA
+- Length [px]
+- Width [px]
+- Number of helical turns
+- Gap ratio between helices
+- Central angle (For circular DNA only)
+- Number of strands
+- Weight of strands [px]
+- Color of strands
+- Background color
+
+# Licensing
+DNA Drawer is licensed under the MIT License.
+
+This repository refers to codes from other libraries:
+* [p5.gui](https://github.com/bitcraftlab/p5.gui/tree/master) is licensed under MIT
+* [p5.js](https://github.com/processing/p5.js) is licensed under LGPL 2.1
+* [DAT.GUI](https://github.com/dataarts/dat.gui) is licensed under Apache 2.0
+* [Quicksettings.js](https://github.com/bit101/quicksettings) is licensed under MIT
+
+# Other DNA drawers
+* https://ibuki-kawamata.org/DNAHelixDrawer/index.html

@@ -5,7 +5,8 @@ DNA Drawing Tool Using P5.js
 DNA Drawer is running at https://sakatani.github.io/dna-drawer/
 
 # Usage
-![image](https://github.com/sakatani/dna-drawer/assets/29421510/6aafbd0b-fda9-4aa6-8c5b-ef0833cce99e)
+![image](https://github.com/sakatani/dna-drawer/assets/29421510/d05fb86c-3eb5-47af-9c2c-d4488e9534b2)
+
 You can change DNA properites and styles listed below:
 - Shape 
   - circular or linear DNA

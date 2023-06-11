@@ -37,10 +37,10 @@ const props = {
   angleMax: 360,
   angleStep: 1,
 
-  chains: 2,
-  chainsMin: 0,
-  chainsMax: 7,
-  chainsStep: 1,
+  strands: 2,
+  strandsMin: 0,
+  strandsMax: 7,
+  strandsStep: 1,
 }
 
 
@@ -70,7 +70,7 @@ function draw() {
 
 const circularDNA = () => {
   const pitch = props.angle / props.turns;
-  for (let i = 0; i < props.chains; i++){ 
+  for (let i = 0; i < props.strands; i++){ 
     const gap = i * props.gap * pitch
     const dna = new CircularDna(pitch, gap);
     dna.calcCoordinates();
@@ -80,7 +80,7 @@ const circularDNA = () => {
 
 const linearDNA = () => {
   const pitch = 2 * props.length / props.turns;
-  for (let i = 0; i < props.chains; i++){ 
+  for (let i = 0; i < props.strands; i++){ 
     const gap = - i * props.gap * pitch
     const dna = new LinearDna(pitch, gap);
     dna.calcCoordinates();

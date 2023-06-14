@@ -1,0 +1,14 @@
+
+.header{
+    background: #fff;
+    color: #000;
+    margin-top: 10px;
+}
+.label{
+    padding: 10px 20px;
+    font:32px sans-serif;
+}
+.github-icon{
+    float: right;
+    margin-right: 10px;
+}

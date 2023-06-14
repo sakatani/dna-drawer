@@ -50,11 +50,11 @@ function setup() {
   noStroke();
 
   // Create DNA Property GUI
-  const gui = createGui('DNA Properties');
+  const gui = createGui('DNA Properties').setPosition(20, 55);
   gui.addObject(props);
 
   // Create Style GUI
-  const gui2 = createGui('Styles').setPosition(width - 220, 20);
+  const gui2 = createGui('Styles').setPosition(width - 220, 55);
   gui2.addObject(styles);
 
 }

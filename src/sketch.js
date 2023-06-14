@@ -1,6 +1,6 @@
 // gui props
 const styles = {
-  backgroundColor: '#000000',
+  backgroundColor: '#ffffff',
   strokeColor: '#00ccee',
 
   weight: 2,

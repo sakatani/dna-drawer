@@ -4,6 +4,9 @@ DNA Drawing Tool Using P5.js
 # Demo
 DNA Drawer is running at https://sakatani.github.io/dna-drawer/
 
+# Blog Post
+https://note.com/ysakatani/n/n1510cc7a5525 (written in Japanese)
+
 # Usage
 ![image](https://github.com/sakatani/dna-drawer/assets/29421510/d05fb86c-3eb5-47af-9c2c-d4488e9534b2)
 
